@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Free cyber risk assessment - know your cyber risk in 3 minutes">
+    <title>Free Cyber Risk Assessment | QuoteCyberInsurance.com</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔒</text></svg>">
+</head>
+<body class="bg-gray-50">
+    <!-- Nav -->
+    <nav class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="index.html" class="flex items-center gap-2">
+                <span class="text-3xl">🔒</span>
+                <span class="text-xl font-bold text-blue-900">QuoteCyberInsurance.com</span>
+            </a>
+            <a href="tel:3125551234" class="text-blue-600 font-semibold">📞 (312) 555-1234</a>
+        </div>
+    </nav>
+
+    <!-- Progress Bar -->
+    <div class="bg-white border-b border-gray-200">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between mb-2">
+                <span class="text-sm font-semibold text-gray-700">Step <span id="currentStep">1</span> of 5</span>
+                <span class="text-sm text-gray-600"><span id="completionPercent">0</span>% Complete</span>
+            </div>
+            <div class="w-full bg-gray-200 rounded-full h-3">
+                <div id="progressBar" class="bg-blue-600 h-3 rounded-full transition-all duration-300" style="width: 0%"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Assessment Form -->
+    <section class="py-12">
+        <div class="container mx-auto px-4 max-w-3xl">
+            
+            <!-- Step 1: Business Profile -->
+            <div id="step1" class="assessment-step">
+                <h2 class="text-3xl font-bold mb-2 text-gray-800">Tell Us About Your Business</h2>
+                <p class="text-gray-600 mb-8">Basic information to understand your coverage needs</p>
+                
+                <div class="bg-white p-8 rounded-lg shadow-md space-y-6">
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Company Name *</label>
+                        <input type="text" id="companyName" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Acme Corp">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Industry *</label>
+                        <select id="industry" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                            <option value="">Select industry...</option>
+                            <option value="Technology">Technology / Software</option>
+                            <option value="Healthcare">Healthcare / Medical</option>
+                            <option value="Financial Services">Financial Services</option>
+                            <option value="Professional Services">Professional Services (Law, Consulting, etc.)</option>
+                            <option value="Retail">Retail / E-commerce</option>
+                            <option value="Manufacturing">Manufacturing</option>
+                            <option value="Construction">Construction</option>
+                            <option value="Hospitality">Hospitality / Food Service</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Annual Revenue *</label>
+                        <select id="revenue" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                            <option value="">Select range...</option>
+                            <option value="<500K">Less than $500K</option>
+                            <option value="500K-1M">$500K - $1M</option>
+                            <option value="1M-5M">$1M - $5M</option>
+                            <option value="5M-20M">$5M - $20M</option>
+                            <option value="20M-50M">$20M - $50M</option>
+                            <option value="50M+">$50M+</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Number of Employees *</label>
+                        <select id="employees" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                            <option value="">Select range...</option>
+                            <option value="1-5">1-5</option>
+                            <option value="5-10">5-10</option>
+                            <option value="10-50">10-50</option>
+                            <option value="50-200">50-200</option>
+                            <option value="200+">200+</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">State *</label>
+                        <select id="state" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                            <option value="">Select state...</option>
+                            <option value="IL">Illinois</option>
+                            <option value="IN">Indiana</option>
+                            <option value="WI">Wisconsin</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+
+                    <button onclick="nextStep(2)" class="w-full bg-blue-600 text-white px-6 py-4 rounded-lg text-lg font-bold hover:bg-blue-700 transition">
+                        Continue to Step 2 →
+                    </button>
+                </div>
+            </div>
+
+            <!-- Step 2: Cyber Exposure -->
+            <div id="step2" class="assessment-step hidden">
+                <h2 class="text-3xl font-bold mb-2 text-gray-800">What Data Do You Handle?</h2>
+                <p class="text-gray-600 mb-8">Help us understand your cyber risk exposure</p>
+                
+                <div class="bg-white p-8 rounded-lg shadow-md space-y-6">
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-3">What types of data does your business handle? (Check all that apply)</label>
+                        <div class="space-y-2">
+                            <label class="flex items-center gap-3 p-3 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer">
+                                <input type="checkbox" value="customer_contact" class="w-5 h-5 text-blue-600">
+                                <span>Customer contact information (names, emails, phones)</span>
+                            </label>
+                            <label class="flex items-center gap-3 p-3 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer">
+                                <input type="checkbox" value="payment_cards" class="w-5 h-5 text-blue-600">
+                                <span>Payment card information (credit/debit cards)</span>
+                            </label>
+                            <label class="flex items-center gap-3 p-3 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer">
+                                <input type="checkbox" value="bank_accounts" class="w-5 h-5 text-blue-600">
+                                <span>Bank account information</span>
+                            </label>
+                            <label class="flex items-center gap-3 p-3 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer">
+                                <input type="checkbox" value="ssn" class="w-5 h-5 text-blue-600">
+                                <span>Social Security numbers</span>
+                            </label>
+                            <label class="flex items-center gap-3 p-3 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer">
+                                <input type="checkbox" value="healthcare" class="w-5 h-5 text-blue-600">
+                                <span>Healthcare data (HIPAA regulated)</span>
+                            </label>
+                            <label class="flex items-center gap-3 p-3 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer">
+                                <input type="checkbox" value="trade_secrets" class="w-5 h-5 text-blue-600">
+                                <span>Trade secrets / proprietary information</span>
+                            </label>
+                            <label class="flex items-center gap-3 p-3 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer">
+                                <input type="checkbox" value="employee_data" class="w-5 h-5 text-blue-600">
+                                <span>Employee personal data</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Approximately how many customer records do you store? *</label>
+                        <select id="recordCount" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                            <option value="">Select range...</option>
+                            <option value="<100">Less than 100</option>
+                            <option value="100-1000">100 - 1,000</option>
+                            <option value="1000-10000">1,000 - 10,000</option>
+                            <option value="10000-100000">10,000 - 100,000</option>
+                            <option value="100000+">100,000+</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">How do you handle payment processing? *</label>
+                        <select id="paymentProcessing" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                            <option value="">Select option...</option>
+                            <option value="third_party">Third-party processor (Stripe, Square, PayPal, etc.)</option>
+                            <option value="in_house">In-house payment system</option>
+                            <option value="none">We don't process payments</option>
+                        </select>
+                    </div>
+
+                    <div class="flex gap-4">
+                        <button onclick="previousStep(1)" class="flex-1 bg-gray-200 text-gray-700 px-6 py-4 rounded-lg text-lg font-bold hover:bg-gray-300 transition">
+                            ← Back
+                        </button>
+                        <button onclick="nextStep(3)" class="flex-1 bg-blue-600 text-white px-6 py-4 rounded-lg text-lg font-bold hover:bg-blue-700 transition">
+                            Continue →
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 3: Security Posture -->
+            <div id="step3" class="assessment-step hidden">
+                <h2 class="text-3xl font-bold mb-2 text-gray-800">Your Security Setup</h2>
+                <p class="text-gray-600 mb-8">This helps us assess your risk and recommend coverage</p>
+                
+                <div class="bg-white p-8 rounded-lg shadow-md space-y-6">
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Do you use multi-factor authentication (MFA)? *</label>
+                        <select id="mfa" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                            <option value="">Select option...</option>
+                            <option value="yes_everywhere">Yes, everywhere</option>
+                            <option value="partial">Yes, but only for some systems</option>
+                            <option value="no">No</option>
+                            <option value="not_sure">Not sure</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Do you provide regular cybersecurity training for employees? *</label>
+                        <select id="training" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                            <option value="">Select option...</option>
+                            <option value="quarterly">Yes, quarterly or more frequently</option>
+                            <option value="annually">Yes, annually</option>
+                            <option value="planning">No, but planning to</option>
+                            <option value="no">No</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-3">What cybersecurity tools do you currently use? (Check all that apply)</label>
+                        <div class="space-y-2">
+                            <label class="flex items-center gap-3 p-3 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer">
+                                <input type="checkbox" value="antivirus" class="w-5 h-5 text-blue-600">
+                                <span>Antivirus / endpoint protection</span>
+                            </label>
+                            <label class="flex items-center gap-3 p-3 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer">
+                                <input type="checkbox" value="firewall" class="w-5 h-5 text-blue-600">
+                                <span>Firewall</span>
+                            </label>
+                            <label class="flex items-center gap-3 p-3 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer">
+                                <input type="checkbox" value="email_security" class="w-5 h-5 text-blue-600">
+                                <span>Email security (spam/phishing filter)</span>
+                            </label>
+                            <label class="flex items-center gap-3 p-3 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer">
+                                <input type="checkbox" value="backup" class="w-5 h-5 text-blue-600">
+                                <span>Backup system</span>
+                            </label>
+                            <label class="flex items-center gap-3 p-3 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer">
+                                <input type="checkbox" value="vpn" class="w-5 h-5 text-blue-600">
+                                <span>VPN for remote access</span>
+                            </label>
+                            <label class="flex items-center gap-3 p-3 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer">
+                                <input type="checkbox" value="siem" class="w-5 h-5 text-blue-600">
+                                <span>Security monitoring / SIEM</span>
+                            </label>
+                            <label class="flex items-center gap-3 p-3 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer">
+                                <input type="checkbox" value="none" class="w-5 h-5 text-blue-600">
+                                <span>None of the above</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Do you have IT support? *</label>
+                        <select id="itSupport" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                            <option value="">Select option...</option>
+                            <option value="internal">Full-time internal IT team</option>
+                            <option value="msp">Managed Service Provider (MSP)</option>
+                            <option value="part_time">Part-time / contract IT support</option>
+                            <option value="none">No dedicated IT support</option>
+                        </select>
+                    </div>
+
+                    <div class="flex gap-4">
+                        <button onclick="previousStep(2)" class="flex-1 bg-gray-200 text-gray-700 px-6 py-4 rounded-lg text-lg font-bold hover:bg-gray-300 transition">
+                            ← Back
+                        </button>
+                        <button onclick="nextStep(4)" class="flex-1 bg-blue-600 text-white px-6 py-4 rounded-lg text-lg font-bold hover:bg-blue-700 transition">
+                            Continue →
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 4: Coverage Needs -->
+            <div id="step4" class="assessment-step hidden">
+                <h2 class="text-3xl font-bold mb-2 text-gray-800">Your Coverage Needs</h2>
+                <p class="text-gray-600 mb-8">Almost done! Just a few more questions</p>
+                
+                <div class="bg-white p-8 rounded-lg shadow-md space-y-6">
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Why are you looking for cyber insurance? *</label>
+                        <select id="motivation" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                            <option value="">Select reason...</option>
+                            <option value="contract">Required for a contract</option>
+                            <option value="compliance">Regulatory / compliance requirement</option>
+                            <option value="incident">Recent security scare or incident</option>
+                            <option value="proactive">Proactive risk management</option>
+                            <option value="shopping">Shopping for better coverage</option>
+                            <option value="inquiry">Just researching options</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">When do you need coverage in place? *</label>
+                        <select id="timeline" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                            <option value="">Select timeline...</option>
+                            <option value="immediately">Immediately (ASAP)</option>
+                            <option value="30_days">Within 30 days</option>
+                            <option value="30-90_days">30-90 days</option>
+                            <option value="90+_days">90+ days</option>
+                            <option value="just_looking">Just looking / no rush</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">What coverage limit are you looking for?</label>
+                        <select id="coverageLimit" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                            <option value="">Select limit...</option>
+                            <option value="1M">$1 million</option>
+                            <option value="2M">$2 million</option>
+                            <option value="5M">$5 million</option>
+                            <option value="10M+">$10 million+</option>
+                            <option value="not_sure">Not sure - need recommendation</option>
+                        </select>
+                    </div>
+
+                    <div class="flex gap-4">
+                        <button onclick="previousStep(3)" class="flex-1 bg-gray-200 text-gray-700 px-6 py-4 rounded-lg text-lg font-bold hover:bg-gray-300 transition">
+                            ← Back
+                        </button>
+                        <button onclick="nextStep(5)" class="flex-1 bg-blue-600 text-white px-6 py-4 rounded-lg text-lg font-bold hover:bg-blue-700 transition">
+                            Continue →
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 5: Contact Info -->
+            <div id="step5" class="assessment-step hidden">
+                <h2 class="text-3xl font-bold mb-2 text-gray-800">Get Your Risk Report</h2>
+                <p class="text-gray-600 mb-8">Where should we send your personalized cyber risk assessment?</p>
+                
+                <div class="bg-white p-8 rounded-lg shadow-md space-y-6">
+                    <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-6">
+                        <p class="text-sm text-blue-900">
+                            🎉 <strong>You're almost done!</strong> We'll calculate your risk score and send a detailed report to your email instantly.
+                        </p>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">First Name *</label>
+                            <input type="text" id="firstName" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="John">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Last Name *</label>
+                            <input type="text" id="lastName" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="Smith">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Email Address *</label>
+                        <input type="email" id="email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="john@company.com">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Phone Number (optional)</label>
+                        <input type="tel" id="phone" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="(312) 555-1234">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Best time to reach you?</label>
+                        <select id="bestTime" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                            <option value="anytime">Anytime</option>
+                            <option value="morning">Morning (9am-12pm)</option>
+                            <option value="afternoon">Afternoon (12pm-5pm)</option>
+                            <option value="evening">Evening (5pm-8pm)</option>
+                        </select>
+                    </div>
+
+                    <div class="flex gap-4">
+                        <button onclick="previousStep(4)" class="flex-1 bg-gray-200 text-gray-700 px-6 py-4 rounded-lg text-lg font-bold hover:bg-gray-300 transition">
+                            ← Back
+                        </button>
+                        <button onclick="submitAssessment()" id="submitBtn" class="flex-1 bg-green-600 text-white px-6 py-4 rounded-lg text-lg font-bold hover:bg-green-700 transition">
+                            Get My Risk Report →
+                        </button>
+                    </div>
+
+                    <p class="text-xs text-gray-500 text-center">
+                        By submitting, you agree to receive your risk report and follow-up from Mark. 
+                        No spam, unsubscribe anytime. <a href="privacy.html" class="text-blue-600 hover:underline">Privacy Policy</a>
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <script src="js/assessment.js"></script>
+</body>
+</html>
