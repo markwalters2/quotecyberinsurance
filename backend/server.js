@@ -114,10 +114,19 @@ app.post('/api/assessment/submit', async (req, res) => {
         sendAssessmentEmail(assessmentData, riskAnalysis, premiumEstimate, leadId)
             .catch(err => console.error('Email send error:', err));
 
-        // 7. Notify Mark if qualified/hot lead (async, don't wait)
+        // 7. Distribute lead to appropriate team member
+        const leadDistribution = require('./lead-distribution');
+        const assignedTo = leadDistribution.assignLead({
+            state: assessmentData.state,
+            revenue: assessmentData.revenue,
+            industry: assessmentData.industry,
+            urgency: assessmentData.timeframe === 'immediate' ? 'high' : 'normal'
+        });
+        
+        // Notify assigned team member if qualified/hot lead
         if (leadScore.quality === 'qualified' || leadScore.quality === 'hot') {
-            notifyMark(leadId, assessmentData, riskAnalysis, leadScore)
-                .catch(err => console.error('Mark notification error:', err));
+            notifyTeamMember(assignedTo, leadId, assessmentData, riskAnalysis, leadScore)
+                .catch(err => console.error('Team notification error:', err));
         }
 
         // Return success
