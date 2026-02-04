@@ -1,6 +1,6 @@
 # QuoteCyberInsurance.com - MVP Implementation
 
-**Chicago's First AI-Powered Cyber Insurance Quote Platform**
+**AI-Powered Cyber Insurance Platform - $5MM in Limit in 24 Hours**
 
 ## 🎯 Project Overview
 
@@ -12,7 +12,7 @@ This is a complete, production-ready MVP for an AI-powered cyber insurance quote
 - Email automation
 - Premium estimation
 
-**Goal:** Generate qualified cyber insurance leads for Mark's brokerage with minimal manual work.
+**Goal:** Generate qualified cyber insurance leads nationwide. Leads distributed to Mark (Chicago), David (New York), and Jason (Miami) for rapid $5MM coverage binding.
 
 ---
 
