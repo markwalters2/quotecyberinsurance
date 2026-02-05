@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alliance Risk - Insurance Contacts Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .header h1 {
+            color: #2c3e50;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #7f8c8d;
+            font-size: 1.1rem;
+        }
+
+        .demo-alert {
+            background: #e8f4f8;
+            border-left: 4px solid #3498db;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            color: #2c3e50;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #3498db;
+        }
+
+        .stat-label {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+
+        .demo-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .demo-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .demo-table th,
+        .demo-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .demo-table th {
+            background: #f8f9fa;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .role-badge {
+            background: #3498db;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+        }
+
+        .priority-high {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+
+        .demo-controls {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .demo-input {
+            flex: 1;
+            min-width: 250px;
+            padding: 12px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+        }
+
+        .demo-button {
+            padding: 12px 25px;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .demo-button:hover {
+            background: #2980b9;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-card h3 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .feature-card p {
+            color: #7f8c8d;
+            line-height: 1.6;
+        }
+
+        .cta-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            margin-top: 30px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 15px 30px;
+            background: #27ae60;
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: background 0.3s ease;
+            margin: 10px;
+        }
+
+        .cta-button:hover {
+            background: #229954;
+        }
+
+        .demo-note {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px 0;
+            color: #856404;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .demo-controls {
+                flex-direction: column;
+            }
+            
+            .demo-input {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎯 Alliance Risk Insurance Contacts</h1>
+            <p>Professional Contact Management System</p>
+            <div class="demo-alert">
+                <strong>⚠️ Demo Version:</strong> This is a demonstration of the insurance contacts database interface. Contact details have been anonymized for privacy.
+            </div>
+        </div>
+
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-number">102</div>
+                <div class="stat-label">Total Contacts</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">81</div>
+                <div class="stat-label">Underwriters</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">48</div>
+                <div class="stat-label">Brokers/MGAs</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">46</div>
+                <div class="stat-label">VIP Priority</div>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2>🔍 Smart Search & Filtering</h2>
+            <div class="demo-controls">
+                <input type="text" class="demo-input" placeholder="Search contacts by name, company, or role..." value="Rodney">
+                <button class="demo-button">Search</button>
+            </div>
+            
+            <div class="demo-table">
+                <table class="demo-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Company</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th>Priority</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="priority-high">
+                            <td>Rodney N.</td>
+                            <td>RT Specialty</td>
+                            <td>rodney.n***@rtspecialty.com</td>
+                            <td><span class="role-badge">Underwriter</span></td>
+                            <td class="priority-high">High</td>
+                        </tr>
+                        <tr class="priority-medium">
+                            <td>Amit H.</td>
+                            <td>Chubb</td>
+                            <td>amit.h***@chubb.com</td>
+                            <td><span class="role-badge">Underwriter</span></td>
+                            <td class="priority-medium">Medium</td>
+                        </tr>
+                        <tr>
+                            <td>Laci Y.</td>
+                            <td>The Hartford</td>
+                            <td>laci.y***@thehartford.com</td>
+                            <td><span class="role-badge">Underwriter</span></td>
+                            <td>Medium</td>
+                        </tr>
+                        <tr>
+                            <td>Matthew C.</td>
+                            <td>Amwins</td>
+                            <td>matthew.c***@amwins.com</td>
+                            <td><span class="role-badge">Underwriter</span></td>
+                            <td>Medium</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="feature-grid">
+            <div class="feature-card">
+                <h3>📊 Interactive Dashboard</h3>
+                <p>Real-time statistics showing total contacts, breakdowns by role, and priority relationships at a glance.</p>
+            </div>
+            
+            <div class="feature-card">
+                <h3>🔍 Smart Search</h3>
+                <p>Instantly find contacts by name, company, email, or role. Results update in real-time as you type.</p>
+            </div>
+            
+            <div class="feature-card">
+                <h3>🎯 Advanced Filtering</h3>
+                <p>Filter by role (Underwriter, Broker, MGA), company, territory, or priority level for targeted outreach.</p>
+            </div>
+            
+            <div class="feature-card">
+                <h3>📥 Export Options</h3>
+                <p>Export filtered results as CSV for CRM import. Choose from complete database or specific categories.</p>
+            </div>
+            
+            <div class="feature-card">
+                <h3>📱 Mobile Friendly</h3>
+                <p>Fully responsive design works perfectly on desktop, tablet, and mobile devices.</p>
+            </div>
+            
+            <div class="feature-card">
+                <h3>🔒 Privacy First</h3>
+                <p>All processing done locally with Mistral. Zero API costs, complete data privacy.</p>
+            </div>
+        </div>
+
+        <div class="cta-section">
+            <h2>Ready to Use the Full Database?</h2>
+            <p>The complete database with all contact details is available locally.</p>
+            
+            <div class="demo-note">
+                <strong>Note:</strong> The full database contains sensitive contact information including email addresses, phone numbers, and detailed relationship notes. Access is restricted to local use only for privacy and security.
+            </div>
+            
+            <a href="http://localhost:8080" class="cta-button">🚀 Access Full Database (Local)</a>
+            <a href="#" class="cta-button" onclick="alert('Contact me to arrange access to the complete database!')">📞 Request Access</a>
+        </div>
+
+        <div class="demo-section">
+            <h2>📈 Processing Statistics</h2>
+            <ul>
+                <li>✅ <strong>102 contacts</strong> processed from Outlook database</li>
+                <li>✅ <strong>1.9GB</strong> of email data analyzed for context</li>
+                <li>✅ <strong>Role identification</strong> completed for all contacts</li>
+                <li>✅ <strong>Priority scoring</strong> based on interaction frequency</li>
+                <li>✅ <strong>Zero API costs</strong> - All local processing with Mistral</li>
+            </ul>
+        </div>
+
+        <div class="demo-section" style="text-align: center;">
+            <h2>🎯 Ready to Weaponize These Relationships?</h2>
+            <p style="font-size: 1.1rem; color: #7f8c8d;">
+                This database represents months of relationship building, now organized and ready for strategic outreach. 
+                Start with the 46 VIP priority contacts for immediate impact!
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Demo functionality
+        document.querySelector('.demo-button').addEventListener('click', function() {
+            alert('In the full version, this would filter results in real-time!');
+        });
+    </script>
+</body>
+</html>
