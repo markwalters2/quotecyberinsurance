@@ -40,6 +40,10 @@
       "dest": "/assessment.html"
     },
     {
+      "src": "/upload",
+      "dest": "/upload.html"
+    },
+    {
       "src": "/",
       "dest": "/index.html"
     }

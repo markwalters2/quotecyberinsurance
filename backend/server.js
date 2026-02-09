@@ -7,6 +7,7 @@ const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
 const { Pool } = require('pg');
 const Anthropic = require('@anthropic-ai/sdk');
+const multer = require('multer');
 require('dotenv').config();
 
 const app = express();
@@ -49,6 +50,84 @@ app.use((req, res, next) => {
 // Health check
 app.get('/health', (req, res) => {
     res.json({ status: 'ok', timestamp: new Date().toISOString() });
+});
+
+// ============================================================================
+// QUICK UPLOAD (TEMP) — stores small files in Postgres
+// Anyone with the /upload link can upload; use only for quick internal transfers.
+// ============================================================================
+
+// Ensure uploads table exists
+(async () => {
+    try {
+        await db.query(`
+            CREATE EXTENSION IF NOT EXISTS pgcrypto;
+            CREATE TABLE IF NOT EXISTS uploads (
+                id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+                filename TEXT NOT NULL,
+                content_type TEXT,
+                size_bytes INTEGER,
+                content BYTEA NOT NULL,
+                created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+            );
+        `);
+        console.log('Uploads table ready');
+    } catch (e) {
+        console.warn('Uploads table check failed (this is OK if DB not configured yet):', e.message);
+    }
+})();
+
+const upload = multer({
+    storage: multer.memoryStorage(),
+    limits: { fileSize: 8 * 1024 * 1024 } // 8MB cap
+});
+
+app.post('/api/upload', upload.single('file'), async (req, res) => {
+    try {
+        if (!req.file) {
+            return res.status(400).json({ success: false, error: 'No file uploaded (field name must be "file")' });
+        }
+        if (!process.env.DATABASE_URL) {
+            return res.status(500).json({ success: false, error: 'DATABASE_URL not configured on server' });
+        }
+
+        const { originalname, mimetype, size, buffer } = req.file;
+
+        const result = await db.query(
+            `INSERT INTO uploads (filename, content_type, size_bytes, content) VALUES ($1,$2,$3,$4) RETURNING id, created_at`,
+            [originalname, mimetype, size, buffer]
+        );
+
+        const id = result.rows[0].id;
+        res.json({
+            success: true,
+            id,
+            filename: originalname,
+            sizeBytes: size,
+            downloadUrl: `/api/upload/${id}`
+        });
+
+    } catch (error) {
+        console.error('Upload error:', error);
+        res.status(500).json({ success: false, error: 'Upload failed' });
+    }
+});
+
+app.get('/api/upload/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const result = await db.query(`SELECT filename, content_type, size_bytes, content FROM uploads WHERE id = $1`, [id]);
+        if (result.rows.length === 0) {
+            return res.status(404).json({ success: false, error: 'Not found' });
+        }
+        const row = result.rows[0];
+        res.setHeader('Content-Type', row.content_type || 'application/octet-stream');
+        res.setHeader('Content-Disposition', `attachment; filename="${row.filename.replace(/"/g,'') }"`);
+        res.send(row.content);
+    } catch (error) {
+        console.error('Download error:', error);
+        res.status(500).json({ success: false, error: 'Download failed' });
+    }
 });
 
 // Submit assessment
